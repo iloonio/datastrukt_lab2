@@ -1,0 +1,39 @@
+## 05/05/2023 / 14:00 - Notes ##
+Why does it take longer to process a rising array
+(that is, in theory, already sorted) than a randomized array?
+a very good stackoverflow post explain this in good detail
+https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array
+
+Branch prediction failure:
+    If you guess right: it continues on
+    If you guess wrong: you have to slow down before going again
+
+The quicksort algorithm we implemented has the following issue:
+    if len(arr) <= 1:
+        return arr
+
+This is the first statement. In the case of a sorted array, our "right" array will never
+be just one element or empty, while our left array will always be empty. so when we concatenate our left, right, and pivot,
+we will end up moving the pivot one step, and then doing the concatenating again, only to move everything one step again.
+Things don't really branch ouch in a seamless way.
+
+branching is also generally bad for performance, and when we do two
+recursions for each function call, in quicksort, that results in lots of branching. [1]
+
+Results are similar for arrays holding multiples of only one value.
+
+[1] Measuring the performance Impact of Branching instructions, Beierlieb, others
+
+
+## 05/05/2023 / 14:45  - Notes ##
+
+We need to plot elements on x, time taken on y. we have to plot our measured data
+with deviation in mind, and also the function's expected big O curve.
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.power(x, 2) # Effectively y = x**2
+e = np.array([1.5, 2.6, 3.7, 4.6, 5.5])
+
+plt.errorbar(x, y, e, linestyle='None', marker='^')
+
+plt.show()
