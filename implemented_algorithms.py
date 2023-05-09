@@ -3,11 +3,18 @@ import numpy as np
 import time
 
 
+class SortingResult:  # this could've been a struct, but we can't have those in python...
+    def __init__(self, lowest, highest, median):
+        self.lowest = lowest
+        self.highest = highest
+        self.median = median
+
+
 def quicksort(arr):
     if len(arr) <= 1:
         return arr
     else:
-        # use first element as our pivot (we will compare values to it)
+        # use a first element as our pivot (we will compare values to it)
         pivot = arr[0]
         left: list[Any] = [x for x in arr[1:] if x < pivot]
         right: list[Any] = [x for x in arr[1:] if x >= pivot]
@@ -17,7 +24,7 @@ def quicksort(arr):
         # are made with numpy and everything breaks if we don't :(
 
 
-# mergesort seems to be broken. It returns -10 on both ends of the array when its printed out in main.py
+# Mergesort seems to be broken. It returns -10 on both ends of the array when It's printed out in main.py
 def mergesort(arr):
     if len(arr) > 1:
 
@@ -71,8 +78,36 @@ def bubblesort(arr):
 
 
 def measure_time(func, array):
-    print("size of array: ", len(array))
-    start = time.time()
-    func(array)
-    end = time.time()
-    return end - start
+    # measures time taken for a sorting algorithm to process an array,
+    # will then append the time taken to an array.
+    # returns the median of all elements inside the array
+    sort_times = []
+    for i in range(5):
+        start = time.time()
+        func(array)
+        end = time.time()
+        time_taken = end - start
+        sort_times.append(time_taken)
+
+    return np.median(sort_times)
+
+
+def deliver_measurements(func, array_type, size):
+    array = np.random.rand(size) # default case
+
+    match array_type:
+        case "random":
+            array = np.random.rand(size)
+
+        case "rising":
+            array = np.arange(3200)
+
+        case "falling":
+            array = np.arange(3200)[::-1]
+
+        case "constant":
+            array = np.arrange(size, 1)
+
+    return SortingResult(0, 1, measure_time(func, array))  # measure_time() should return a SortingResult object
+    # Containing all that good stuff we like. We're going to use this to plot a graph afterward.
+

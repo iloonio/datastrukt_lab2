@@ -37,3 +37,30 @@ e = np.array([1.5, 2.6, 3.7, 4.6, 5.5])
 plt.errorbar(x, y, e, linestyle='None', marker='^')
 
 plt.show()
+
+
+
+## 06/05/2023/ 09:21 - Notes ##
+I found a short pdf on block-quicksort, i think its supposed to be like quicksort but with a smaller likelihood of branch prediction failure.
+I'll continue reading it, ill probably download it too, just so that it is in my laptop's files.
+"One of the most widely used sorting algorithms is the Quicksort, which has been by Hoare in 1962 and is considered
+to be one of the most efficient sorting algorithms (...) Although its average number of comparisons is not optimal
+- 138n log n + =(n) vs. n log n + O(n) for Mergesort -, its over-all instruction count is very low. Moreover, by
+choosing the pivot element as median of some larger sample, the leading term 1.38n log n for the average number
+of comparisons can be made smaller - Even down to n log n when choosing the pivot as median of some sample of
+growing size. (...) A major drawback of Quicksort is its quadratic worst-case running time. Nevertheless, there are
+efficient ways to circumvent a terrible worst-case scenario. (...) The most prominent is Intro-sort (introduced by
+Musser) which is applied in GCC implementation of std::sort: As soon as recursion depth exceeds a certain limit, the
+algorithm switches to Heapsort. "
+
+Another deficiency of quicksort is that it suffers from branch misses in an essential way. On modern processors with
+long pipelines, every missed branch prediction causes a rather long interruption of the execution since the pipeline has
+to be filled anew.
+
+Conditional jumps are the usual method of implementing sorting algorithms. These can be avoided.
+
+## 09/05/2023 21:20 - Notes ##
+I'm finally healthy enough to look at a screen without getting dizzy again! Sweet.
+We have to make a function that will create arrays for the measure_time() function to eat up. This way we can keep our main clean.
+Out of these functions, we're going to need to save the lowest and the highest measurements for a given configuration of N, algorithm, and array-type,
+we will also save the median. So median, lowest measure, and high measure, are the most important things.

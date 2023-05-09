@@ -11,17 +11,58 @@ rising_array = np.arange(3200)
 
 falling_array = rising_array[::-1]  # reversing to achieve "monotone falling"
 
-randomized_array = np.random.rand(3200)
-
 constant_array = np.full(3200, 1)  # constant array (neither growing nor falling, nor is it randomized)
 
-time_taken = measure_time(quicksort, randomized_array)
-print("time taken to sort randomized array:", time_taken)
+rand_quicksort_times = []
+rise_quicksort_times = []
+fall_quicksort_times = []
+cons_quicksort_times = []
 
-time_taken = measure_time(quicksort, rising_array)
-print("Time taken to sort rising array:", time_taken)
+randomized_array = np.random.rand(500)
+print("average time taken to sort randomized array with N500:", measure_time(quicksort, randomized_array))
 
-time_taken = measure_time(quicksort, constant_array)
-print("time taken to sort constant array:", time_taken)
+randomized_array = np.random.rand(1000)
+print("average time taken to sort randomized array with N1000:", measure_time(quicksort, randomized_array))
 
+randomized_array = np.random.rand(2000)
+print("average time taken to sort randomized array with N2000:", measure_time(quicksort, randomized_array))
 
+randomized_array = np.random.rand(4000)
+print("average time taken to sort randomized array with N4000:", measure_time(quicksort, randomized_array))
+
+randomized_array = np.random.rand(8000)
+print("average time taken to sort randomized array with N8000:", measure_time(quicksort, randomized_array))
+
+print("finished")
+
+rising_array = np.arange(500)
+print("average time taken to sort rising array with N500:", measure_time(quicksort, rising_array))
+
+rising_array = np.arange(1000)
+print("average time taken to sort rising array with N1000:", measure_time(quicksort, rising_array))
+
+rising_array = np.arange(2000)
+print("average time taken to sort rising array with N2000:", measure_time(quicksort, rising_array))
+
+rising_array = np.arange(4000)
+print("average time taken to sort rising array with N4000:", measure_time(quicksort, rising_array))
+
+rising_array = np.arange(8000)
+print("average time taken to sort rising array with N8000:", measure_time(quicksort, rising_array))
+
+print("finished")
+
+rising_array = np.arange(500)
+print("average time taken to sort falling array with N500:", measure_time(quicksort, rising_array[::-1]))
+
+rising_array = np.arange(1000)
+print("average time taken to sort falling array with N1000:", measure_time(quicksort, rising_array[::-1]))
+
+rising_array = np.arange(2000)
+print("average time taken to sort falling array with N2000:", measure_time(quicksort, rising_array[::-1]))
+
+rising_array = np.arange(4000)
+print("average time taken to sort falling array with N4000:", measure_time(quicksort, rising_array[::-1]))
+
+rising_array = np.arange(8000)
+print("average time taken to sort falling array with N8000:", measure_time(quicksort, rising_array[::-1]))
