@@ -1,12 +1,12 @@
 ## 05/05/2023 / 14:00 - Notes ##
 Why does it take longer to process a rising array
 (that is, in theory, already sorted) than a randomized array?
-a very good stackoverflow post explain this in good detail
+An exceptional stackoverflow post explains this in good detail
 https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array
 
 Branch prediction failure:
-    If you guess right: it continues on
-    If you guess wrong: you have to slow down before going again
+If you guess right: it continues on
+If you guess wrong: you have to slow down before going again
 
 The quicksort algorithm we implemented has the following issue:
     if len(arr) <= 1:

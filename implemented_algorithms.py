@@ -1,13 +1,62 @@
 from typing import Any
 import numpy as np
 import time
+from statistics import stdev
+import matplotlib as plt
 
 
 class SortingResult:  # this could've been a struct, but we can't have those in python...
-    def __init__(self, lowest, highest, median):
-        self.lowest = lowest
-        self.highest = highest
+    def __init__(self, median, deviation, elements):
         self.median = median
+        self.deviation = deviation
+        self.elements = elements
+
+
+def run_algorithm(func, array):
+    # measures time taken for a sorting algorithm to process an array,
+    # will then append the time taken to an array.
+    # returns the median of all elements inside the array
+    sort_times = []
+    for i in range(5):
+        start = time.time()
+        func(array)
+        end = time.time()
+        time_taken = end - start
+        sort_times.append(time_taken)
+
+    return SortingResult(np.median(sort_times), stdev(sort_times), len(array))
+
+
+def measure_time(func, array_type, size):
+    array = np.random.rand(size)  # default case
+
+    match array_type:
+        case "random":
+            array = np.random.rand(size)
+
+        case "rising":
+            array = np.arange(size)
+
+        case "falling":
+            array = np.arange(size)[::-1]
+
+        case "constant":
+            array = np.full(size, 1)
+
+    results = run_algorithm(func, array)  # measure_time() should return a SortingResult object
+    # Containing all that good stuff we like. We're going to use this to plot a graph afterward.
+    print(results.elements, results.median, results.deviation)
+
+    return results
+
+
+def plot_graph(sorting_result):
+    # this is going to take in an array holding multiple sorting results, and then they will be plotted to reveal a
+    # graph.
+    plt.xlabel('elements N')
+    plt.ylabel('time taken')
+    plt.plot(sorting_result.elements, sorting_result.median)
+    plt.show()
 
 
 def quicksort(arr):
@@ -75,39 +124,3 @@ def bubblesort(arr):
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
     return arr
-
-
-def measure_time(func, array):
-    # measures time taken for a sorting algorithm to process an array,
-    # will then append the time taken to an array.
-    # returns the median of all elements inside the array
-    sort_times = []
-    for i in range(5):
-        start = time.time()
-        func(array)
-        end = time.time()
-        time_taken = end - start
-        sort_times.append(time_taken)
-
-    return np.median(sort_times)
-
-
-def deliver_measurements(func, array_type, size):
-    array = np.random.rand(size) # default case
-
-    match array_type:
-        case "random":
-            array = np.random.rand(size)
-
-        case "rising":
-            array = np.arange(3200)
-
-        case "falling":
-            array = np.arange(3200)[::-1]
-
-        case "constant":
-            array = np.arrange(size, 1)
-
-    return SortingResult(0, 1, measure_time(func, array))  # measure_time() should return a SortingResult object
-    # Containing all that good stuff we like. We're going to use this to plot a graph afterward.
-
