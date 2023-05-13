@@ -2,7 +2,7 @@ from typing import Any
 import numpy as np
 import time
 from statistics import stdev
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 
 class SortingResult:  # this could've been a struct, but we can't have those in python...
@@ -17,14 +17,14 @@ def run_algorithm(func, array):
     # will then append the time taken to an array.
     # returns the median of all elements inside the array
     sort_times = []
-    for i in range(5):
+    for i in range(10):
         start = time.time()
         func(array)
         end = time.time()
         time_taken = end - start
         sort_times.append(time_taken)
 
-    return SortingResult(np.median(sort_times), stdev(sort_times), len(array))
+    return SortingResult(np.mean(sort_times), stdev(sort_times), len(array))
 
 
 def measure_time(func, array_type, size):
@@ -45,17 +45,90 @@ def measure_time(func, array_type, size):
 
     results = run_algorithm(func, array)  # measure_time() should return a SortingResult object
     # Containing all that good stuff we like. We're going to use this to plot a graph afterward.
-    print(results.elements, results.median, results.deviation)
+    print(results.elements, results.median, results.deviation, ' 10')
 
     return results
 
 
-def plot_graph(sorting_result):
-    # this is going to take in an array holding multiple sorting results, and then they will be plotted to reveal a
-    # graph.
+def generate_results(func, title, lowest_N, highest_N, N_growth):
+    elements = []
+    times = []
+    stddevs = []
+    list_of_measurements = []
+    print(title + " results with five measurements for each datapoint")
+    print("randomized list results:")
+    print("N        median          stddev          samples")
+    for x in range(lowest_N, highest_N, N_growth):
+        list_of_measurements.append(measure_time(func, "random", x))
+
+    for i in list_of_measurements:
+        elements.append(i.elements)
+        times.append(i.median)
+        stddevs.append(i.deviation)
+
+    plt.plot(elements, times, label="randomized list")
+    plt.errorbar(elements, times, stddevs, linestyle='none', marker='^')
+
+    elements.clear()
+    times.clear()
+    stddevs.clear()
+    list_of_measurements.clear()
+
+    print("rising list results:")
+    print("N        median          stddev          samples")
+    for x in range(lowest_N, highest_N, N_growth):
+        list_of_measurements.append(measure_time(func, "rising", x))
+
+    for i in list_of_measurements:
+        elements.append(i.elements)
+        times.append(i.median)
+        stddevs.append(i.deviation)
+
+    plt.plot(elements, times, label='rising list')
+    plt.errorbar(elements, times, stddevs, linestyle='none', marker='^')
+
+    elements.clear()
+    times.clear()
+    stddevs.clear()
+    list_of_measurements.clear()
+
+    print("falling list results:")
+    print("N        median          stddev          samples")
+    for x in range(lowest_N, highest_N, N_growth):
+        list_of_measurements.append(measure_time(func, "falling", x))
+
+    for i in list_of_measurements:
+        elements.append(i.elements)
+        times.append(i.median)
+        stddevs.append(i.deviation)
+
+    plt.plot(elements, times, label='falling list')
+    plt.errorbar(elements, times, stddevs, linestyle='none', marker='^')
+
+    elements.clear()
+    times.clear()
+    stddevs.clear()
+
+    print("constant list results:")
+    print("N        median          stddev          samples")
+    list_of_measurements.clear()
+    for x in range(lowest_N, highest_N, N_growth):
+        list_of_measurements.append(measure_time(func, "constant", x))
+
+    for i in list_of_measurements:
+        elements.append(i.elements)
+        times.append(i.median)
+        stddevs.append(i.deviation)
+
+    plt.plot(elements, times, label='constant list')
+    plt.errorbar(elements, times, stddevs, linestyle='none', marker='^')
+    plt.style.use('bmh')
     plt.xlabel('elements N')
-    plt.ylabel('time taken')
-    plt.plot(sorting_result.elements, sorting_result.median)
+    plt.ylabel('time taken (Seconds)')
+    plt.legend(loc=0)
+    plt.title(title)
+    plt.savefig(title)
+    plt.legend()
     plt.show()
 
 
@@ -123,4 +196,71 @@ def bubblesort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
+    return arr
+
+
+def median_of_three_quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    # Select pivot using median-of-three strategy
+    left = 0
+    right = len(arr) - 1
+    mid = (left + right) // 2
+    pivot_index = np.argpartition(arr, [left, mid, right])[1]  # Index of the median value
+    pivot_value = arr[pivot_index]
+
+    # Move pivot to the rightmost position
+    arr[pivot_index], arr[right] = arr[right], arr[pivot_index]
+
+    # Partition the array
+    i = left
+    for j in range(left, right):
+        if arr[j] <= pivot_value:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+
+    # Move pivot back to its sorted position
+    arr[i], arr[right] = arr[right], arr[i]
+
+    # Recursively sort the sub-arrays
+    arr[left:i] = median_of_three_quicksort(arr[left:i])
+    arr[i + 1:right + 1] = median_of_three_quicksort(arr[i + 1:right + 1])
+
+    return arr
+
+
+def right_pivot_quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        # use a first element as our pivot (we will compare values to it)
+        pivot = len(arr) / 2
+        left: list[Any] = [x for x in arr[1:] if x < pivot]
+        right: list[Any] = [x for x in arr[1:] if x >= pivot]
+        # Recursively apply quicksort to the left and right sub-lists,
+        # and concatenate the sorted left sub-list, pivot, and sorted right sub-list in that order.
+        return np.concatenate((right_pivot_quicksort(left), [pivot],
+                               right_pivot_quicksort(right)))  # we return as numpy because our arrays
+        # are made with numpy and everything breaks if we don't :(
+
+
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+
+def selection_sort(arr):
+    for i in range(len(arr)):
+        min_index = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
