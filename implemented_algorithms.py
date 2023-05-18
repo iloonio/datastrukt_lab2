@@ -17,7 +17,7 @@ def run_algorithm(func, array):
     # will then append the time taken to an array.
     # returns the median of all elements inside the array
     sort_times = []
-    for i in range(10):
+    for i in range(5):
         start = time.time()
         func(array)
         end = time.time()
@@ -45,7 +45,7 @@ def measure_time(func, array_type, size):
 
     results = run_algorithm(func, array)  # measure_time() should return a SortingResult object
     # Containing all that good stuff we like. We're going to use this to plot a graph afterward.
-    print(results.elements, results.median, results.deviation, ' 10')
+    print(results.elements, results.median, results.deviation, ' 5')
 
     return results
 
