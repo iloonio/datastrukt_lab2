@@ -190,6 +190,30 @@ N        median          stddev
 
 
 ## 13/05/2023 / 14:21 - NOTES ##
-Insertion sort acts really weirdly when its put through
-all the functions. It cant seem to produce the correct
+Insertion sort acts really weirdly when it's put through
+all the functions. It can't seem to produce the correct
 results.
+
+## 22/05/2023 / 15:32 - CASE AGAINST C++ ##
+
+Ur Laborationer/översikt:
+"Du väljer helt fritt vilken utvecklingsmiljö du skriver labbarna i.
+Implementationsspråket är c++ om inget annat anges."
+-> dock så angavs något annat:
+
+"Använder du C++ så finns std::chrono:: ur <chrono>"
+-> detta antyder att vi *har* ett val i språk. inget språk angavs med samtidigt angavs
+ett alternativ i språk i just denna mening. Så något HAR angets, och det är utvecklarfrihet
+
+-> poängen med labben är att implementera och utveckla datastrukturer. Om du så vill att jag ska
+implementera allt i c++ och SEDAN läsa in resultaten in i ett grafritande verktyg är det nog
+inte så rimligt eftersom samma resultat kommer att få us för sorterings algoritmerna. Vi kommer få
+samma big O notation. Jag vill åtminstone ha inlämningslådan öppnad för labbarna som jag har framställd
+korrekta resultat för. Jag förstår precis vad som händer i min kod, den råkar bara vara i ett annat
+språk.
+
+-> Eftersom du gav parser koden för labb 1 i C++ gjordes labbet i samma språk.
+
+-> Jag har tekniskt sätt inte gjort något fel. om du påstår att allt skulle ha gjorts i c++ skulle
+labbinstruktionen motsäga ditt ord.
+

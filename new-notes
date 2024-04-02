@@ -1,0 +1,5 @@
+01/04/2024
+
+We need to make each algorithms worst/best/average cases apparent by giving them individual graphs.
+The best way to do this would be to create a classes that stores data points and a the type of list they're associated
+to (random, constant, etc), then create a class that stores an algorithm and this class together.
