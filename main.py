@@ -1,54 +1,26 @@
 import sys
-
 import matplotlib.pyplot as plt
 from implemented_algorithms import *
 from algorithm_benchmarking import *
+from graphing import *
 import numpy as np
-
 sys.setrecursionlimit(320000)
-plt.style.use('bmh')
 
 k1 = 5.25e-4
-
-
-def quadratic(n):
-    return n * n
-
-
-def n_log_n(n):
-    return n * np.log(n)
-
-
-def log_n(n):
-    return np.log(n)
-
-
-def linear(n):
-    return n
-
-
 # Generate a range of n values
-n_values = np.linspace(1, 10000, 100)  # Adjust the range and number of points as needed
+n_values = np.linspace(1, 5000, 100)  # Adjust the range and number of points as needed
+quicksort_results = generate_all_results(quicksort, "quicksort", 1000, 4001, 1000)
 
-plt.plot(n_values, k1 * n_log_n(n_values), label='f(n) = k * n * log(n)')
-plt.plot(n_values, k1 * log_n(n_values), label='g(n) = k * log(n)')
-plt.plot(n_values, k1 * linear(n_values), label='h(n) = k * n')
-plt.plot(n_values, k1 * quadratic(n_values), label='j(n) = k * n^2')
+plot_series(quicksort_results.rand.elements, quicksort_results.rand.median,
+            'randomized', quicksort_results.rand.deviation)
+plot_series(quicksort_results.rising.elements, quicksort_results.rising.median,
+            'rising', quicksort_results.rising.deviation)
+plot_series(quicksort_results.falling.elements, quicksort_results.falling.median,
+            'falling', quicksort_results.falling.deviation)
+plot_series(quicksort_results.const.elements, quicksort_results.const.median,
+            'const', quicksort_results.const.deviation)
+plot_k_estimate(n_values, n_log_n, 5.25e-4, 'fit n log n')
+plot_k_estimate(n_values, quadratic, 5.25e-5, 'fit n^2')
+plot_k_estimate(n_values, log_n, 5.25e-4, 'fit log n')
 
-quicksort_results = generate_all_results(quicksort, "quicksort", 1000, 8001, 1000)
-
-plt.plot(quicksort_results.rand.elements, quicksort_results.rand.median, label='quicksort -- '
-                                                                               'random series')
-plt.errorbar(quicksort_results.rand.elements, quicksort_results.rand.median,
-             quicksort_results.rand.deviation, linestyle='none', marker='^')
-plt.style.use('bmh')
-plt.xlabel('elements (n)')
-plt.ylabel('median time (ms)')
-plt.legend(loc=0)
-plt.title("quicksort on a randomized list")
-plt.savefig("quicksort_random")
-plt.grid(True)
-plt.legend()
-plt.show()
-
-# plot_runtimes_test()
+generate_graph("quicksort -- various series", "quicksort_randomized")
