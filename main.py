@@ -27,11 +27,15 @@ plot_series(quicksort_results.falling.elements, quicksort_results.falling.median
 plot_series(quicksort_results.const.elements, quicksort_results.const.median,
             'const', quicksort_results.const.deviation)
 generate_graph("quicksort -- various series", "quicksort_various")
-write_class_to_file(generate_all_results(insertion_sort, "insertion sort", 4000, 20001, 4000),
-                    "algorithm_time_results"
-                    "/insertionsort")
+
+n_values = np.linspace(1, 11000, 100)
+write_class_to_file(generate_all_results(insertion_sort, "insertionsort", 2000, 10001, 2000), "algorithm_time_results/insertionsort")
 r = read_class_from_file("algorithm_time_results/insertionsort")
+plot_k_estimate(n_values, quadratic, 1.7e-5, 'fit n^2')
 plot_series(r.rand.elements, r.rand.deviation, 'randomized', r.rand.median)
-generate_graph("selection sort -- random series", "selectionsort_random")
+plot_series(r.rising.elements, r.rising.deviation, 'rising', r.rising.median)
+plot_series(r.falling.elements, r.falling.median, 'falling', r.falling.deviation)
+plot_series(r.const.elements, r.const.median, 'const', r.const.deviation)
+generate_graph("selection sort -- various series", "insertionsort_various")
 
 print("done")
