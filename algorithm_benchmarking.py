@@ -6,8 +6,7 @@ from matplotlib import pyplot as plt
 
 
 class AlgorithmResult:
-    def __init__(self, algorithm, rand, rising, falling, const):
-        self.algorithm = algorithm
+    def __init__(self, rand, rising, falling, const):
         self.rand = rand
         self.rising = rising
         self.falling = falling
@@ -28,13 +27,13 @@ class DataPoint:
         self.y_deviation = deviation
 
 
-def generate_all_results(algorithm, title, n_min, n_max, n_growth):
-    randomized_results = generate_results(algorithm, title, "random", n_min, n_max, n_growth)
-    rising_results = generate_results(algorithm, title, "rising", n_min, n_max, n_growth)
-    falling_results = generate_results(algorithm, title, "falling", n_min, n_max, n_growth)
-    const_results = generate_results(algorithm, title, "const", n_min, n_max, n_growth)
+def generate_all_results(algorithm, algorithm_title, n_min, n_max, n_growth):
+    randomized_results = generate_results(algorithm, algorithm_title, "random", n_min, n_max, n_growth)
+    rising_results = generate_results(algorithm, algorithm_title, "rising", n_min, n_max, n_growth)
+    falling_results = generate_results(algorithm, algorithm_title, "falling", n_min, n_max, n_growth)
+    const_results = generate_results(algorithm, algorithm_title, "const", n_min, n_max, n_growth)
 
-    return AlgorithmResult(title, randomized_results, rising_results, falling_results, const_results)
+    return AlgorithmResult(randomized_results, rising_results, falling_results, const_results)
 
 
 def generate_results(func, func_title, list_type, lowest_n, highest_n, n_growth):

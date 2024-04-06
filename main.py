@@ -1,10 +1,13 @@
 import sys
+from class_to_file_converter import *
 import matplotlib.pyplot as plt
 from implemented_algorithms import *
 from algorithm_benchmarking import *
 from graphing import *
 import numpy as np
 sys.setrecursionlimit(320000)
+
+read_results = read_class_from_file("algorithm_time_results/quicksort")
 
 k1 = 5.25e-4
 # Generate a range of n values
@@ -24,3 +27,9 @@ plot_k_estimate(n_values, quadratic, 5.25e-5, 'fit n^2')
 plot_k_estimate(n_values, log_n, 5.25e-4, 'fit log n')
 
 generate_graph("quicksort -- various series", "quicksort_randomized")
+
+write_class_to_file(quicksort_results, "algorithm_time_results/quicksort")
+
+read_results = read_class_from_file("algorithm_time_results/quicksort")
+
+
