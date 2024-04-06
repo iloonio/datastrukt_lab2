@@ -6,24 +6,12 @@ from algorithm_benchmarking import *
 
 def write_class_to_file(obj: AlgorithmResult, file):
     with open(file, 'w') as file:
-        file.write(f"random series \n elements, median, deviation \n")
-        for i in range(len(obj.rand.elements)):
-            file.write(f"{obj.rand.elements[i]}, {obj.rand.median[i]}, {obj.rand.deviation[i]} \n")
-        file.write("\n")
-
-        file.write(f"rising series \n elements, median, deviation \n")
-        for i in range(len(obj.rising.elements)):
-            file.write(f"{obj.rising.elements[i]}, {obj.rising.median[i]}, {obj.rising.deviation[i]} \n")
-        file.write("\n")
-
-        file.write(f"falling series \n elements, median, deviation \n")
-        for i in range(len(obj.falling.elements)):
-            file.write(f"{obj.falling.elements[i]}, {obj.falling.median[i]}, {obj.falling.deviation[i]} \n")
-        file.write("\n")
-
-        file.write(f"const series \n elements, median, deviation \n")
-        for i in range(len(obj.const.elements)):
-            file.write(f"{obj.const.elements[i]}, {obj.const.median[i]}, {obj.const.deviation[i]} \n")
+        for series_name, series_data in [('random series', obj.rand), ('rising series', obj.rising),
+                                         ('falling series', obj.falling), ('const series', obj.const)]:
+            file.write(f"{series_name}\n")
+            for i in range(len(series_data.elements)):
+                file.write(f"{series_data.elements[i]}, {series_data.median[i]}, {series_data.deviation[i]}\n")
+            file.write("\n")
 
 
 def read_class_from_file(file: str) -> AlgorithmResult:
@@ -35,19 +23,20 @@ def read_class_from_file(file: str) -> AlgorithmResult:
             line = line.strip()
             if line in ['random series', 'rising series', 'falling series', 'const series']:
                 current_series = line
-            elif line == 'elements, median, deviation':
-                next(f)  # Skip header line
-                data_line = next(f).strip()
-                data = [float(entry) for entry in data_line.split(',')]
-                setattr(result_dict[current_series], 'elements', data[0])
-                setattr(result_dict[current_series], 'median', data[1])
-                setattr(result_dict[current_series], 'deviation', data[2])
-                next(f)  # Skip extra newline
-            else:
-                continue
+            elif line:  # Only process non-empty lines
+                data = [float(entry) for entry in line.split(',')]
+                result_dict[current_series].elements.append(data[0])
+                result_dict[current_series].median.append(data[1])
+                result_dict[current_series].deviation.append(data[2])
 
     return AlgorithmResult(result_dict['random series'], result_dict['rising series'],
                            result_dict['falling series'], result_dict['const series'])
+
+
+
+
+
+
 
 
 
