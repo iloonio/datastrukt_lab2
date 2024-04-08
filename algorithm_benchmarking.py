@@ -93,9 +93,10 @@ def run_algorithm(func, array):
     # will then append the time taken to an array.
     # returns the median of all elements inside the array
     sort_times = []
-    for i in range(10):
+    for i in range(5):
+        temp_array = list(array)
         start = time.time()
-        func(array)
+        func(temp_array)
         end = time.time()
         time_taken = (end - start) * 1000
         sort_times.append(time_taken)

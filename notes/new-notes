@@ -1,34 +1,29 @@
 01/04/2024
 
 We need to make each algorithms worst/best/average cases apparent by giving them individual graphs.
-The best way to do this would be to create a classes that stores data points and a the type of list they're associated
-to (random, constant, etc), then create a class that stores an algorithm and this class together.
+The best way to do this would be to create a classes that stores data points and a the type of list they're associated to (random, constant, etc), then create a class that stores an algorithm and this class together.
 
 
 
-feed this into chatgpt:
+06/04/2024
 
-although it is able to successfully read the file, there is a problem: it doesnt turn into an object correctly.
+We've created everything we need in order to do the measurements and test the times. Only thing missing is a functioning selection sort which we will implement in C++. If we encounter the same issue again then we'll talk to Martin about it.
 
-The resulting object contains four lists with all contain only ONE item from the numerous that is should have. I want it to successfully read and append all items inside of the file to their appropriate lists inside of AlgorithmResult. Here is what a list might looks like:
+What i find frustrating is that I will need to measure the time of 6 different algorithms for 4 different lists, group together results from different lists based on their time complexity, and then graph a function that fits those points precisely enough that a correlation can be seen for each group. This is hell, honestly.
 
-rising series
- elements, median, deviation
-1000, 96.01778984069824, 0.9260903827445774
-2000, 375.6828784942627, 11.950756123390912
-3000, 824.598503112793, 11.210676072488436
-4000, 1446.4736461639404, 13.652052027352518
+Here is the timeline then:
+Implement Selection Sort in C++
+    if it works:
+        -> Begin measuring times of each algorithm, creating a dump of textfiles containing measurements.
+        -> Graph these results in order to discover which results belong on the same graph.
+        -> Graph groups of results together
+        -> Graph a fitting function for each group, and adjust its k-value such that it fits the function.
 
-falling series
- elements, median, deviation
-1000, 96.01716995239258, 0.49176088628138503
-2000, 369.6372985839844, 3.7457038255570434
-3000, 826.4241695404053, 12.73620503412359
-4000, 1453.9083003997803, 8.434263339068641
 
-const series
- elements, median, deviation
-1000, 97.92227745056152, 3.5455092081056425
-2000, 373.9619731903076, 11.897026561151122
-3000, 824.7714042663574, 11.228205820669736
-4000, 1459.1065406799316, 11.931583215840801 
+AH its so weird. After debugging i notcied that the first time it sorts the list, it takes it a decent chunk of time to get through it, and afterwards it takes it almost no time (this would explain the MASSIVE deviation)
+What if insertion sort modifies the list despite us not letting it do that?
+
+
+POTENTIAL FIX:
+
+-> Run_algorithm now takes in a list_type variable that declares what kind of list to sort through.

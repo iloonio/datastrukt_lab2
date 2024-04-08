@@ -134,6 +134,7 @@ def insertion_sort(arr):
 
 
 def selection_sort(arr):
+    #TODO: This currenly modifies the list, causing our graphs to turn out janky!
     for i in range(len(arr)):
         min_index = i
         for j in range(i + 1, len(arr)):
