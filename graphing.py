@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from class_to_file_converter import *
 
 
 def quadratic(n):
@@ -63,3 +64,14 @@ def plot_series(x, y, label, stddev):
 def plot_k_estimate(x_values, func, k, label):
     # this one is for old-graphs without deviation
     plt.plot(x_values, k * func(x_values), label=label)
+
+
+def plot_all_from_file(file: str):
+    file_input = read_class_from_file("algorithm_time_results/" + file)
+    plot_series(file_input.rand.elements, file_input.rand.median, "random series", file_input.rand.deviation)
+    plot_series(file_input.rising.elements, file_input.rising.median, "rising series", file_input.rising.deviation)
+    plot_series(file_input.falling.elements, file_input.falling.median, "falling series", file_input.falling.deviation)
+    plot_series(file_input.const.elements, file_input.const.median, "const series", file_input.const.deviation)
+
+    generate_graph(file,file)
+

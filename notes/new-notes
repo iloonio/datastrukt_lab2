@@ -27,3 +27,41 @@ What if insertion sort modifies the list despite us not letting it do that?
 POTENTIAL FIX:
 
 -> Run_algorithm now takes in a list_type variable that declares what kind of list to sort through.
+
+
+
+
+
+08/04/2024
+
+Bubblesort:
+    -> All series can be graphed together with respective matching functions (n^2, n log n)
+
+insertionsort:
+    -> falling and random can be graphed together (est. its n^2)
+    -> const & rising series can be graphed together (est. its log n or n linear)
+        -> they must have some function plotted near them to prove this case
+
+med3_quicksort:
+    -> random series has to be mapped by itself (log n?)
+    -> rest are mapped together
+
+mergesort:
+    -> Needs to have its data regenerated. The stddev is far too high, we need to increase the number of elements measured.
+
+Quicksort:
+    -> random series should be for itself
+    -> everything else
+
+Right_quicksort:
+    -> const & random
+    -> falling & rising
+
+selectionsort:
+    -> all together
+
+timsort:
+    -> random
+    -> everything else
+
+

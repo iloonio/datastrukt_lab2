@@ -64,7 +64,7 @@ def bubblesort(arr):
     # Traverse through all array elements
     for i in range(n):
 
-        # Last i elements are ready in place
+        # Last i elements are already in place
         for j in range(0, n - i - 1):
 
             # traverse the array from 0 to n-i-1
@@ -134,7 +134,6 @@ def insertion_sort(arr):
 
 
 def selection_sort(arr):
-    #TODO: This currenly modifies the list, causing our graphs to turn out janky!
     for i in range(len(arr)):
         min_index = i
         for j in range(i + 1, len(arr)):
