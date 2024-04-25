@@ -1,0 +1,73 @@
+01/04/2024
+
+We need to make each algorithms worst/best/average cases apparent by giving them individual graphs.
+The best way to do this would be to create a classes that stores data points and a the type of list they're associated to (random, constant, etc), then create a class that stores an algorithm and this class together.
+
+
+
+06/04/2024
+
+We've created everything we need in order to do the measurements and test the times. Only thing missing is a functioning selection sort which we will implement in C++. If we encounter the same issue again then we'll talk to Martin about it.
+
+What i find frustrating is that I will need to measure the time of 6 different algorithms for 4 different lists, group together results from different lists based on their time complexity, and then graph a function that fits those points precisely enough that a correlation can be seen for each group. This is hell, honestly.
+
+Here is the timeline then:
+Implement Selection Sort in C++
+    if it works:
+        -> Begin measuring times of each algorithm, creating a dump of textfiles containing measurements.
+        -> Graph these results in order to discover which results belong on the same graph.
+        -> Graph groups of results together
+        -> Graph a fitting function for each group, and adjust its k-value such that it fits the function.
+
+
+AH its so weird. After debugging i notcied that the first time it sorts the list, it takes it a decent chunk of time to get through it, and afterwards it takes it almost no time (this would explain the MASSIVE deviation)
+What if insertion sort modifies the list despite us not letting it do that?
+
+
+POTENTIAL FIX:
+
+-> Run_algorithm now takes in a list_type variable that declares what kind of list to sort through.
+
+
+
+
+
+08/04/2024
+
+Bubblesort:
+    -> All series can be graphed together with respective matching functions (n^2, n log n)
+
+insertionsort:
+    -> falling and random can be graphed together (est. its n^2)
+    -> const & rising series can be graphed together (est. its log n or n linear)
+        -> they must have some function plotted near them to prove this case
+
+med3_quicksort:
+    -> random series has to be mapped by itself (log n?)
+    -> rest are mapped together
+
+mergesort:
+    -> Needs to have its data regenerated. The stddev is far too high, we need to increase the number of elements measured.
+    (est. its linear or log N)
+
+Quicksort:
+    N log N or N^2
+    -> random series should be for itself
+    -> everything else
+
+Right_quicksort:
+    -> const & random
+    -> falling & rising
+
+selectionsort:
+    -> all together
+
+timsort:
+    -> random
+    -> everything else
+
+
+Lecture notes 10/04/2024
+
+-> Log is always log2 in this course, and its a lot about approximating values.
+    what does it mean to have a stable sort? relative order isnt
