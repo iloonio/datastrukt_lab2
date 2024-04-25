@@ -48,8 +48,10 @@ med3_quicksort:
 
 mergesort:
     -> Needs to have its data regenerated. The stddev is far too high, we need to increase the number of elements measured.
+    (est. its linear or log N)
 
 Quicksort:
+    N log N or N^2
     -> random series should be for itself
     -> everything else
 
@@ -65,3 +67,7 @@ timsort:
     -> everything else
 
 
+Lecture notes 10/04/2024
+
+-> Log is always log2 in this course, and its a lot about approximating values.
+    what does it mean to have a stable sort? relative order isnt

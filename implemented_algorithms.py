@@ -24,6 +24,7 @@ def quicksort(arr):
 
 
 # Mergesort seems to be broken. It returns -10 on both ends of the array when It's printed out in main.py
+# TODO: is this still the case?
 def mergesort(arr):
     if len(arr) > 1:
 
