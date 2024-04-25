@@ -9,7 +9,7 @@ import numpy as np
 sys.setrecursionlimit(320000)
 
 # Generate a range of n values
-n_values = np.linspace(1, 10000000, 10000)
+
 # quicksort_results = generate_all_results(quicksort, "quicksort", 2000, 10001, 2000) write_class_to_file(
 # generate_all_results(insertion_sort, "insertionsort", 2000, 10001, 2000), "algorithm_time_results/insertionsort")
 # write_class_to_file(generate_all_results(sorted, "timsort", 100000, 1000001, 100000),
@@ -40,13 +40,6 @@ time_results = ["bubblesort", "insertionsort", "median_of_three_quicksort", "mer
 # plot_series(fileInput.const.elements, fileInput.const.median, "const series", fileInput.const.deviation)
 # plot_k_estimate(n_values, quadratic, 1.3e-4, "n^2 fit")
 
-# plot_series(fileInput.rising.elements, fileInput.rising.median, "rising series", fileInput.rising.deviation)
-# plot_series(fileInput.falling.elements, fileInput.falling.median, "falling series", fileInput.falling.deviation)
-# TODO: these are mislabeled.
-#  find the graph with these labels and FIX it.
-# plot_k_estimate(n_values, quadratic, 3.1e-5, "n log n fit falling")
-# plot_k_estimate(n_values, quadratic, 4.6e-5, "n log n fit rising")
-
 # plot_series(fileInput.rand.elements, fileInput.rand.median, "random series", fileInput.rand.deviation)
 # plot_series(fileInput.falling.elements, fileInput.falling.median, "falling series", fileInput.falling.deviation)
 # plot_k_estimate(n_values, n_log_n, 3.2e-4, "n log n fit falling series")
@@ -66,14 +59,23 @@ time_results = ["bubblesort", "insertionsort", "median_of_three_quicksort", "mer
 # write_class_to_file(generate_all_results(sorted, "timsort", 1000000, 10000000, 1000000),
 #                    "algorithm_time_results/timsort")
 
-fileInput = read_class_from_file("algorithm_time_results/timsort")
 
-plot_series(fileInput.rand.elements, fileInput.rand.median, "random series", fileInput.rand.deviation)
-#plot_series(fileInput.falling.elements, fileInput.falling.median, "falling series", fileInput.falling.deviation)
-#plot_series(fileInput.rising.elements, fileInput.rising.median, "rising series", fileInput.rising.deviation)
-#plot_series(fileInput.const.elements, fileInput.const.median, "const series", fileInput.const.deviation)
-#plot_k_estimate(n_values, linear, 5.0e-6, " linear n fit const series")
-plot_k_estimate(n_values, n_log_n, 1.74e-5, "n log n fit")
 
-generate_graph("timsort - random series", "timsort_random_series")
+# plot_series(fileInput.rand.elements, fileInput.rand.median, "random series", fileInput.rand.deviation)
+# plot_series(fileInput.falling.elements, fileInput.falling.median, "falling series", fileInput.falling.deviation)
+# plot_series(fileInput.rising.elements, fileInput.rising.median, "rising series", fileInput.rising.deviation)
+# plot_series(fileInput.const.elements, fileInput.const.median, "const series", fileInput.const.deviation)
+# plot_k_estimate(n_values, linear, 5.0e-6, " linear n fit const series")
+# plot_k_estimate(n_values, n_log_n, 1.74e-5, "n log n fit")
+
+fileInput = read_class_from_file("algorithm_time_results/median_of_three_quicksort")
+n_values = np.linspace(1, 18000, 100)
+
+plot_series(fileInput.rising.elements, fileInput.rising.median, "rising series", fileInput.rising.deviation)
+plot_series(fileInput.falling.elements, fileInput.falling.median, "falling series", fileInput.falling.deviation)
+plot_k_estimate(n_values, quadratic, 3.1e-5, "n^2 fit falling")
+plot_k_estimate(n_values, quadratic, 4.6e-5, "n^2 fit rising")
+
+generate_graph("m3 quicksort - rising & falling series", "median_of_three_quicksort_rising_falling")
+
 print("done")
